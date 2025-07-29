@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%=guest.username%>'s Pantry</title>
+  </head>
+  <body>
+    <%- include('../partials/_navbar.ejs') %>
+    <h1>Welcome to <%=guest.username%>'s Pantry</h1>
+    <% if(guest.pantry.length){ %>
+      <ul>
+        <%guest.pantry.forEach(function(el){ %>
+          <li style="display:flex; gap:10px;align-items:center">
+            <p><%=el.name %></p>
+          
+          </li>
+        <%});%>
+      </ul>
+    <%}else{%>
+      <p>There are no items in this pantry.</p>
+    <%}%>
+  </body>
+</html>
