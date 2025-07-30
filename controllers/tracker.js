@@ -1,4 +1,3 @@
-// controllers/foods.js
 
 const express = require('express');
 const router = express.Router();
@@ -10,7 +9,7 @@ const Food = require('../models/food.js')
 router
 .get('/', (req, res) => {
   console.log(res.locals.user)
-  res.render('foods/index.ejs',{user:res.locals.user});
+  res.render('tracker/index.ejs',{user:res.locals.user});
 })
 .post('/', async (req, res) => {
   try{
@@ -22,7 +21,7 @@ router
         const newFood = await Food.create({name:name})
         await User.findByIdAndUpdate(user._id,{$push:{pantry:newFood._id}},{new:true})
         res.locals.user.pantry.push({name:name,_id:newFood._id})
-        res.redirect(`/users/${user._id}/foods`)
+        res.redirect(`/users/${user._id}/tracker`)
       }else{
         res.sendStatus(422)//wrong format
       }
@@ -36,14 +35,14 @@ router
 });
 
 router.get('/new', async (req, res) => {
-    res.render('foods/new.ejs', {
+    res.render('tracker/new.ejs', {
         user: req.session.user,
     });
 });
 
 router
 .get('/:itemId', async (req, res) => {
-    res.render('foods/item.ejs', {
+    res.render('tracker/item.ejs', {
         user: req.session.user,
     });
 })
@@ -57,7 +56,7 @@ router
         await Food.findByIdAndUpdate(itemId,{$set:{name:newName}})
         const index = res.locals.user.pantry.findIndex(item=>item._id === itemId)
         res.locals.user.pantry[index].name = newName
-        res.redirect(`/users/${user._id}/foods`)
+        res.redirect(`/users/${user._id}/tracker`)
       }else{
         res.sendStatus(422)//wrong format
       }
@@ -78,7 +77,7 @@ router
         await Food.deleteOne({_id:itemId})
         await User.findByIdAndUpdate(user._id,{$pull:{pantry:itemId}},{new:true})
         res.locals.user.pantry = res.locals.user.pantry.filter(item=>item._id !== itemId)
-        res.redirect(`/users/${user._id}/foods`)
+        res.redirect(`/users/${user._id}/tracker`)
       }else{
         res.sendStatus(422)//wrong format
       }
@@ -95,7 +94,7 @@ router.get('/:itemId/edit', async (req, res) => {
   const itemId = req.params.itemId
   const item = await Food.findById(itemId);
   if(item){
-    res.render('foods/edit.ejs', {
+    res.render('tracker/edit.ejs', {
         user: req.session.user,
         item:item
     });

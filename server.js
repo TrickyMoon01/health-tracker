@@ -6,7 +6,7 @@ const methodOverride = require("method-override");
 const morgan = require("morgan");
 const session = require('express-session');
 const authController = require('./controllers/auth.js');
-const foodsController = require('./controllers/foods.js');
+const trackerController = require('./controllers/tracker.js');
 const usersController = require('./controllers/users.js');
 
 const isSignedIn = require('./middleware/is-signed-in.js');
@@ -16,6 +16,7 @@ const passUserToView = require('./middleware/pass-user-to-view.js');
 const port = process.env.PORT ? process.env.PORT : "3000";
 
 const app = express();
+app.use(express.static(__dirname+'/css'))
 // Middleware to parse URL-encoded data from forms
 app.use(express.urlencoded({ extended: false }));
 // Middleware for using HTTP verbs such as PUT or DELETE
@@ -47,12 +48,10 @@ app.get('/view-pantry', (req, res) => {
   }
 });
 
-app.use('/explore', usersController);
-
 app.use(passUserToView);
 app.use('/auth', authController);
 app.use(isSignedIn);
-app.use('/users/:userId/foods', foodsController);
+app.use('/users/:userId/tracker', trackerController);
 
 
 app.listen(port, () => {

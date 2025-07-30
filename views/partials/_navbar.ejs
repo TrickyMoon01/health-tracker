@@ -1,11 +1,11 @@
-<nav>
-    <a href="/">Home</a>
+<link rel="stylesheet" href="/style.css">
+<nav class="center">
+    <a class='btn' href="/">Home</a>
     <% if(user) { %>
-        <a href="/users/<%=user._id%>/foods">View my Pantry</a>
-        <a href="/auth/sign-out">Sign Out</a>
+        <a class='btn' href="/users/<%=user._id%>/tracker">Tracker</a>
+        <a class='btn' href="/auth/sign-out">Sign Out</a>
     <% } else { %>
-        <a href="/auth/sign-in">Sign In</a>
-        <a href="/auth/sign-up">Sign Up</a>
+        <a class='btn' href="/auth/sign-in">Sign In</a>
+        <a class='btn' href="/auth/sign-up">Sign Up</a>
     <% } %>
-    <a href="/explore">Explore Our Community</a>
 </nav>
