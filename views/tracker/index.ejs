@@ -8,23 +8,23 @@
   <body>
     <%- include('../partials/_navbar.ejs') %>
     <h1 class="center">Health</h1>
-    <% if(user.pantry.length){ %>
+    <% if(user.weight_history.length){ %>
       <ul>
-        <%user.pantry.forEach(function(el){ %>
+        <%user.weight_history.forEach(function(el){ %>
           <li style="display:flex; gap:10px;align-items:center">
-            <p><%=el.name %></p>
-            <a href="<%=`/users/${user._id}/foods/${el._id}/edit`%>" >
+            <p><%=el.weight %></p>
+            <a href="<%=`/users/${user._id}/tracker/${el._id}/edit_weight`%>" >
               <button type="submit">edit</button>
             </a>
-            <form action="<%=`/users/${user._id}/foods/${el._id}?_method=DELETE`%>" method="POST">
+            <form action="<%=`/users/${user._id}/tracker/${el._id}/weight?_method=DELETE`%>" method="POST">
               <button type="submit" style="background:red;color:white">delete</button>
             </form>
           </li>
         <%});%>
       </ul>
     <%}else{%>
-      <p>There are no items in this pantry.</p>
+      <p>There are no weight records.</p>
     <%}%>
-    <a href="/users/<%=user._id%>/foods/new"><button>Add New Item</button></a>
+    <a href="/users/<%=user._id%>/tracker/weight"><button>Add New Weight Record</button></a>
   </body>
 </html>

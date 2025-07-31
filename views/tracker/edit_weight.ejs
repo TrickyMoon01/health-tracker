@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Pantry</title>
+  </head>
+  <body>
+    <%- include('../partials/_navbar.ejs') %>
+    <h1>Edit Weight Record</h1>
+    <form action="<%=`/users/${user._id}/tracker/${item._id}/edit_weight`%>?_method=PUT" method="POST">
+      <div>
+      <label for="name">Weight:</label>
+      <input type="text" name="weight" id="weight" value="<%= item.weight%>" />
+      </div>
+      <button type="submit">Update Weight Record</button>
+    </form>
+  </body>
+</html>

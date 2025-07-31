@@ -3,7 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 const User = require('../models/user.js');
-const Food = require('../models/food.js')
+const Weight = require('../models/weight.js')
+const Plan = require('../models/plan.js')
 
 // router logic will go here - will be built later on in the lab
 router
@@ -11,51 +12,23 @@ router
   console.log(res.locals.user)
   res.render('tracker/index.ejs',{user:res.locals.user});
 })
-.post('/', async (req, res) => {
+
+
+router
+.get('/weight', async (req, res) => {
+    res.render('tracker/new_weight.ejs', {
+        user: req.session.user,
+    });
+})
+.post('/weight', async (req, res) => {
   try{
     const user = req.session.user;
     if(user){
-      const name = req.body.name;
-      if(name){
-        //add
-        const newFood = await Food.create({name:name})
-        await User.findByIdAndUpdate(user._id,{$push:{pantry:newFood._id}},{new:true})
-        res.locals.user.pantry.push({name:name,_id:newFood._id})
-        res.redirect(`/users/${user._id}/tracker`)
-      }else{
-        res.sendStatus(422)//wrong format
-      }
-    }else{
-      res.sendStatus(401)//unauthorized
-    }
-  }catch(e){
-    console.log(e.message)
-    res.redirect('/')
-  }
-});
-
-router.get('/new', async (req, res) => {
-    res.render('tracker/new.ejs', {
-        user: req.session.user,
-    });
-});
-
-router
-.get('/:itemId', async (req, res) => {
-    res.render('tracker/item.ejs', {
-        user: req.session.user,
-    });
-})
-.put('/:itemId', async (req, res) => {
-   try{
-    const user = req.session.user;
-    if(user){
-      const itemId = req.params.itemId;
-      const newName = req.body.name
-      if(itemId){
-        await Food.findByIdAndUpdate(itemId,{$set:{name:newName}})
-        const index = res.locals.user.pantry.findIndex(item=>item._id === itemId)
-        res.locals.user.pantry[index].name = newName
+      const weight = Number(req.body.weight);
+      if(weight){
+        const newWeight = await Weight.create({weight:weight,user_id:user._id})
+        console.log({newWeight})
+        res.locals.user.weight_history.push({weight:weight})
         res.redirect(`/users/${user._id}/tracker`)
       }else{
         res.sendStatus(422)//wrong format
@@ -68,38 +41,58 @@ router
     res.redirect('/')
   }
 })
-.delete('/:itemId', async (req, res) => {
-   try{
-    const user = req.session.user;
-    if(user){
-      const itemId = req.params.itemId;
-      if(itemId){
-        await Food.deleteOne({_id:itemId})
-        await User.findByIdAndUpdate(user._id,{$pull:{pantry:itemId}},{new:true})
-        res.locals.user.pantry = res.locals.user.pantry.filter(item=>item._id !== itemId)
-        res.redirect(`/users/${user._id}/tracker`)
-      }else{
-        res.sendStatus(422)//wrong format
-      }
-    }else{
-      res.sendStatus(401)//unauthorized
-    }
-  }catch(e){
-    console.log(e.message)
-    res.redirect('/')
-  }
-});
-
-router.get('/:itemId/edit', async (req, res) => {
+.get('/:itemId/edit_weight', async (req, res) => {
   const itemId = req.params.itemId
-  const item = await Food.findById(itemId);
+  const item = await Weight.findById(itemId);
   if(item){
-    res.render('tracker/edit.ejs', {
+    res.render('tracker/edit_weight.ejs', {
         user: req.session.user,
         item:item
     });
   }else{
     res.sendStatus(404)
+  }
+})
+.put('/:itemId/edit_weight', async (req, res) => {
+   try{
+    const user = req.session.user;
+    if(user){
+      const itemId = req.params.itemId;
+      const newWeight = req.body.weight
+      if(itemId){
+        await Weight.findByIdAndUpdate(itemId,{$set:{weight:newWeight}})
+        const index = res.locals.user.weight_history.findIndex(item=>item._id === itemId)
+        res.locals.user.weight_history[index].weight = newWeight
+        res.redirect(`/users/${user._id}/tracker`)
+      }else{
+        res.sendStatus(422)//wrong format
+      }
+    }else{
+      res.sendStatus(401)//unauthorized
+    }
+  }catch(e){
+    console.log(e.message)
+    res.redirect('/')
+  }
+})
+.delete('/:itemId/weight', async (req, res) => {
+   try{
+    const user = req.session.user;
+    if(user){
+      const itemId = req.params.itemId;
+      if(itemId){
+        await Weight.deleteOne({_id:itemId})
+        res.locals.user.weight_history = res.locals.user.weight_history.filter(item=>item._id !== itemId)
+        res.redirect(`/users/${user._id}/tracker`)
+      }else{
+        res.sendStatus(422)//wrong format
+      }
+    }else{
+      res.sendStatus(401)//unauthorized
+    }
+  }catch(e){
+    console.log(e.message)
+    res.redirect('/')
   }
 });
 

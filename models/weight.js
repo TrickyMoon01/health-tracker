@@ -7,9 +7,7 @@ const weightSchema = new mongoose.Schema(
     user_id:{
       type: mongoose.Schema.Types.ObjectId,
         ref:'User',
-    }
-  },
-  {
+    },
     weight: {
       type: Number,
       required: true,
@@ -23,6 +21,6 @@ const weightSchema = new mongoose.Schema(
   }
 );
 
-const Weight = mongoose.model("Weight", foodSchema);
+const Weight = mongoose.model("Weight", weightSchema);
 
-module.exports = Food;
+module.exports = Weight;

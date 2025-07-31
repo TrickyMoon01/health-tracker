@@ -6,20 +6,14 @@ const planSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-  },
-  {
     exercise: {
       type: String,
       required: true,
     },
-  },
-  {
     repetitons: {
       type: Number,
       default: 1,
     },
-  },
-  {
     status: {
       type: String,
       enum: ["finished", "not finished"],
@@ -34,6 +28,6 @@ const planSchema = new mongoose.Schema(
   }
 );
 
-const Plan = mongoose.model("Plan", foodSchema);
+const Plan = mongoose.model("Plan", planSchema);
 
 module.exports = Plan;

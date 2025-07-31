@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Weight = require('./weight.js')
+const Plan = require('./plan.js')
 
 
 const userSchema = new mongoose.Schema({
@@ -17,10 +19,15 @@ userSchema.virtual('weight_history',{
     localField:'_id',
     foreignField: 'user_id'
 })
+userSchema.virtual('plan_history',{
+    ref: 'Plan',
+    localField:'_id',
+    foreignField: 'user_id'
+})
 
 // Configure schema to support population of virtuals
-claimSchema.set("toJSON", { virtuals: true });
-claimSchema.set("toObject", { virtuals: true });
+userSchema.set("toJSON", { virtuals: true });
+userSchema.set("toObject", { virtuals: true });
 //https://mongoosejs.com/docs/tutorials/virtuals.html
 
 const User = mongoose.model('User', userSchema);

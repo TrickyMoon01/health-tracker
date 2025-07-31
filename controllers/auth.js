@@ -35,7 +35,7 @@ router.get('/sign-in', (req, res) => {
 });
 
 router.post('/sign-in', async (req, res) => {
-    const userInDataBase = await User.findOne({ username: req.body.username }).populate('pantry');
+    const userInDataBase = await User.findOne({ username: req.body.username }).populate('weight_history').populate('plan_history');
 
     if (!userInDataBase) {
         return res.send('Login failed. Please try again.');
