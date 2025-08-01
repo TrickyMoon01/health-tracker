@@ -10,7 +10,7 @@ const planSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    repetitons: {
+    repetitions: {
       type: Number,
       default: 1,
     },

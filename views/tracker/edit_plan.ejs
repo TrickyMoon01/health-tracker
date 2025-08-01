@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Exercises</title>
+  </head>
+  <body>
+    <%- include('../partials/_navbar.ejs') %>
+    <h1>Exercise</h1>
+    <form action="<%=`/users/${user._id}/tracker/${item._id}/edit_plan`%>?_method=PUT" method="POST">
+      <div>
+        <label for="exercise">Exercise:</label>
+        <input type="text" name="exercise" id="exercise" value="<%= item.exercise%>" />
+      </div>
+      <div>
+        <label for="repetitions">Repetitions:</label>
+        <input type="number" name="repetitions" id="repetitions" value="<%= item.repetitions%>"/>
+      </div>
+      <div>
+        <label for="status">Status:</label>
+        <select name="status" id="status" >
+          <option value="finished" <%=item.status==='finished'?'selected':''%>>finished</option>
+          <option value="not finished" <%=item.status==='not finished'?'selected':''%>>not finished</option>
+        </select>
+      </div>
+      <button type="submit">Update Exercise Record</button>
+    </form>
+  </body>
+</html>

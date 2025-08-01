@@ -52,3 +52,25 @@ body>form{
 .center{
     text-align: center;
 }
+
+.flex-around{
+    display: flex;
+    justify-content: space-around;
+}
+.flex-start{
+    display: flex;
+    justify-content: flex-start;
+}
+.flex-end{
+    align-items: flex-end;
+    gap:5px;
+}
+.weight-column{
+    width:20px;
+    background-color: wheat;
+    border: 1px solid brown;
+}
+
+.chart{
+    width: 200px
+}

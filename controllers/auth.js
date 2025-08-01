@@ -23,9 +23,9 @@ router.post('/sign-up', async (req, res) => {
     req.body.password = hashedPassword;
     // hashedPassword is holding the value that comes back from bcrypt running a hashSync method on the password
     
-    const user = await User.create(req.body);
+    const user = await (await User.create(req.body)).toObject()
 
-    req.session.user = user
+    req.session.user = {...user,weight_history:[],plan_history:[]}
 
     res.redirect('/');
 });
@@ -38,13 +38,13 @@ router.post('/sign-in', async (req, res) => {
     const userInDataBase = await User.findOne({ username: req.body.username }).populate('weight_history').populate('plan_history');
 
     if (!userInDataBase) {
-        return res.send('Login failed. Please try again.');
+        return res.send('Login failed. <a href="/sign-in">Please try again.</a>');
     }
 
     const validPassword = bcrypt.compareSync(req.body.password, userInDataBase.password);
 
     if (!validPassword) {
-        return res.send('Login failed. Please try again.')
+        return res.send('Login failed. <a href="/sign-in">Please try again.</a>')
     }
 
     req.session.user = userInDataBase

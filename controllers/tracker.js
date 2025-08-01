@@ -9,7 +9,6 @@ const Plan = require('../models/plan.js')
 // router logic will go here - will be built later on in the lab
 router
 .get('/', (req, res) => {
-  console.log(res.locals.user)
   res.render('tracker/index.ejs',{user:res.locals.user});
 })
 
@@ -28,7 +27,7 @@ router
       if(weight){
         const newWeight = await Weight.create({weight:weight,user_id:user._id})
         console.log({newWeight})
-        res.locals.user.weight_history.push({weight:weight})
+        res.locals.user.weight_history.push({_id:newWeight._id,weight:weight})
         res.redirect(`/users/${user._id}/tracker`)
       }else{
         res.sendStatus(422)//wrong format
@@ -83,6 +82,91 @@ router
       if(itemId){
         await Weight.deleteOne({_id:itemId})
         res.locals.user.weight_history = res.locals.user.weight_history.filter(item=>item._id !== itemId)
+        res.redirect(`/users/${user._id}/tracker`)
+      }else{
+        res.sendStatus(422)//wrong format
+      }
+    }else{
+      res.sendStatus(401)//unauthorized
+    }
+  }catch(e){
+    console.log(e.message)
+    res.redirect('/')
+  }
+});
+router
+.get('/plan', async (req, res) => {
+    res.render('tracker/new_plan.ejs', {
+        user: req.session.user,
+    });
+})
+.post('/plan', async (req, res) => {
+  try{
+    const user = req.session.user;
+    if(user){
+      const exercise = req.body.exercise;
+      const repetitions = Number(req.body.repetitions);
+      const status = req.body.status||'not finished';
+      console.log({exercise,repetitions,status})
+      if(exercise && repetitions){
+        const newPlan = await Plan.create({exercise,repetitions,status})
+        res.locals.user.plan_history.push(newPlan)
+        res.redirect(`/users/${user._id}/tracker`)
+      }else{
+        res.sendStatus(422)//wrong format
+      }
+    }else{
+      res.sendStatus(401)//unauthorized
+    }
+  }catch(e){
+    console.log(e.message)
+    res.redirect('/')
+  }
+})
+.get('/:itemId/edit_plan', async (req, res) => {
+  const itemId = req.params.itemId
+  const item = await Plan.findById(itemId);
+  if(item){
+    res.render('tracker/edit_plan.ejs', {
+        user: req.session.user,
+        item:item
+    });
+  }else{
+    res.sendStatus(404)
+  }
+})
+.put('/:itemId/edit_plan', async (req, res) => {
+   try{
+    const user = req.session.user;
+    if(user){
+      const itemId = req.params.itemId;
+      const exercise = req.body.exercise
+      const repetitions = req.body.repetitions
+      const status = req.body.status||'not finished'
+      if(itemId&&status&&repetitions&&exercise){
+        await Plan.findByIdAndUpdate(itemId,{$set:{exercise:exercise,repetitions:repetitions,status:status}})
+        const index = res.locals.user.plan_history.findIndex(item=>item._id === itemId)
+        res.locals.user.plan_history[index] = {_id:itemId,exercise,repetitions,status}
+        res.redirect(`/users/${user._id}/tracker`)
+      }else{
+        res.sendStatus(422)//wrong format
+      }
+    }else{
+      res.sendStatus(401)//unauthorized
+    }
+  }catch(e){
+    console.log(e.message)
+    res.redirect('/')
+  }
+})
+.delete('/:itemId/plan', async (req, res) => {
+   try{
+    const user = req.session.user;
+    if(user){
+      const itemId = req.params.itemId;
+      if(itemId){
+        await Plan.deleteOne({_id:itemId})
+        res.locals.user.plan_history = res.locals.user.plan_history.filter(item=>item._id !== itemId)
         res.redirect(`/users/${user._id}/tracker`)
       }else{
         res.sendStatus(422)//wrong format
