@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Pantry</title>
+    <title>Edit Weight Record</title>
   </head>
   <body>
     <%- include('../partials/_navbar.ejs') %>
-    <h1>Edit Weight Record</h1>
+    <h1 class="center">Edit Weight Record</h1>
     <form action="<%=`/users/${user._id}/tracker/${item._id}/edit_weight`%>?_method=PUT" method="POST">
       <div>
       <label for="name">Weight:</label>

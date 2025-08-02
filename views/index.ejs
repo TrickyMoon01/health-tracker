@@ -8,11 +8,11 @@
   <body>
   <%- include('./partials/_navbar.ejs') %>
   <% if(user?.username){%>
-    <h1 class="center">Welcome <%=user.username%> to Health Tracker!</h1>
+    <h1 class="center">Welcome, <%=user.username%>, to Health Tracker!</h1>
     <%}else{%>
-      <h1 class="center">First time to Health Tracker!</h1>
-      <p class="center">You can <a href="/auth/sign-in">sign In</a>
-        or <a href="/auth/sign-up">sign Up</a></p>
+      <h1 class="center">First time to Health Tracker?</h1>
+      <p class="center">You can <a href="/auth/sign-in">Sign In</a>
+        or <a href="/auth/sign-up">Sign Up</a></p>
       <% }%>
       <h4 class="center">A tracker that tracks your health and goals</h4>
     </body>

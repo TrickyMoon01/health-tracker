@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Exercises</title>
+    <title>Edit Exercise</title>
   </head>
   <body>
     <%- include('../partials/_navbar.ejs') %>
-    <h1>Exercise</h1>
+    <h1 class="center">Exercise</h1>
     <form action="<%=`/users/${user._id}/tracker/${item._id}/edit_plan`%>?_method=PUT" method="POST">
       <div>
         <label for="exercise">Exercise:</label>
@@ -18,10 +18,14 @@
         <input type="number" name="repetitions" id="repetitions" value="<%= item.repetitions%>"/>
       </div>
       <div>
+        <label for="sets">Sets:</label>
+        <input type="number" name="sets" id="sets" value="<%= item.sets%>"/>
+      </div>
+      <div>
         <label for="status">Status:</label>
         <select name="status" id="status" >
-          <option value="finished" <%=item.status==='finished'?'selected':''%>>finished</option>
-          <option value="not finished" <%=item.status==='not finished'?'selected':''%>>not finished</option>
+          <option value="finished" <%=item.status==='finished'?'selected':''%>>Finished</option>
+          <option value="not finished" <%=item.status==='not finished'?'selected':''%>>Not Finished</option>
         </select>
       </div>
       <button type="submit">Update Exercise Record</button>

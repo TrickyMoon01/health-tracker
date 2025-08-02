@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Pantry</title>
+    <title>Health Tracker</title>
   </head>
   <body>
     <%- include('../partials/_navbar.ejs') %>
@@ -11,29 +11,29 @@
     <main class="flex-around">
       <section>
         <% if(user.weight_history.length){ %>
-           <div class="flex-start flex-end chart" >
+          <div class="flex-start flex-end chart" >
             <%user.weight_history.forEach(function(el){ %>
-              <div class="weight-column" style="height:<%= el.weight%>px"></div>
+              <div class="weight-column" style="height:<%= el.weight%>px"><%= el.weight%></div>
             <%});%>
           </div>
-        <ul>
-          <%user.weight_history.forEach(function(el){ %>
-          <li style="display: flex; gap: 10px; align-items: center">
-            <p><%=el.weight %></p>
-            <a href="<%=`/users/${user._id}/tracker/${el._id}/edit_weight`%>">
-              <button type="submit">edit</button>
-            </a>
-            <form
-              action="<%=`/users/${user._id}/tracker/${el._id}/weight?_method=DELETE`%>"
-              method="POST"
-            >
-              <button type="submit" style="background: red; color: white">
-                delete
-              </button>
-            </form>
-          </li>
-          <%});%>
-        </ul>
+          <ul>
+            <%user.weight_history.forEach(function(el){ %>
+              <li style="display: flex; gap: 10px; align-items: center">
+                <p><%=el.weight %></p>
+                <a href="<%=`/users/${user._id}/tracker/${el._id}/edit_weight`%>">
+                  <button type="submit">edit</button>
+                </a>
+                <form
+                  action="<%=`/users/${user._id}/tracker/${el._id}/weight?_method=DELETE`%>"
+                  method="POST"
+                >
+                  <button type="submit" style="background: red; color: white">
+                    delete
+                  </button>
+                </form>
+              </li>
+            <%});%>
+          </ul>
         <%}else{%>
         <p>There are no weight records.</p>
         <%}%>
@@ -45,27 +45,27 @@
         <% if(user.plan_history.length){ %>
         <ul>
           <%user.plan_history.forEach(function(el){ %>
-          <li style="display: flex; gap: 10px; align-items: center">
-            <p><%=el.exercise %> repeat: <%=el.repetitions %>, status: <input disabled type='checkbox' <%= el.status==='finished'?'checked':'' %>/></p>
-            <a href="<%=`/users/${user._id}/tracker/${el._id}/edit_plan`%>">
-              <button type="submit">edit</button>
-            </a>
-            <form
-              action="<%=`/users/${user._id}/tracker/${el._id}/plan?_method=DELETE`%>"
-              method="POST"
-            >
-              <button type="submit" style="background: red; color: white">
-                delete
-              </button>
-            </form>
-          </li>
+            <li style="display: flex; gap: 10px; align-items: center">
+              <p><%=el.exercise %> Reps: <%=el.repetitions %>, Sets: <%=el.sets %> Status: <input disabled type='checkbox' <%= el.status==='finished'?'checked':'' %>/></p>
+              <a href="<%=`/users/${user._id}/tracker/${el._id}/edit_plan`%>">
+                <button type="submit">edit</button>
+              </a>
+              <form
+                action="<%=`/users/${user._id}/tracker/${el._id}/plan?_method=DELETE`%>"
+                method="POST"
+              >
+                <button type="submit" style="background: red; color: white">
+                  delete
+                </button>
+              </form>
+            </li>
           <%})%>
         </ul>
         <%}else{%>
         <p>There are no exercise records.</p>
         <%}%>
         <a href="/users/<%=user._id%>/tracker/plan">
-          <button>Add New exercise Record</button>
+          <button>Add New Exercise Record</button>
         </a>
       </section>
     </main>

@@ -14,6 +14,10 @@ const planSchema = new mongoose.Schema(
       type: Number,
       default: 1,
     },
+    sets: {
+      type: Number,
+      default: 1,
+    },
     status: {
       type: String,
       enum: ["finished", "not finished"],

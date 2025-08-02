@@ -9,7 +9,7 @@ const Plan = require('../models/plan.js')
 // router logic will go here - will be built later on in the lab
 router
 .get('/', (req, res) => {
-  res.render('tracker/index.ejs',{user:res.locals.user});
+  res.render('tracker/index.ejs', {user:res.locals.user});
 })
 
 
@@ -25,9 +25,8 @@ router
     if(user){
       const weight = Number(req.body.weight);
       if(weight){
-        const newWeight = await Weight.create({weight:weight,user_id:user._id})
-        console.log({newWeight})
-        res.locals.user.weight_history.push({_id:newWeight._id,weight:weight})
+        const newWeight = await Weight.create({weight:weight, user_id:user._id})
+        res.locals.user.weight_history.push({_id:newWeight._id, weight:weight})
         res.redirect(`/users/${user._id}/tracker`)
       }else{
         res.sendStatus(422)//wrong format
@@ -36,7 +35,6 @@ router
       res.sendStatus(401)//unauthorized
     }
   }catch(e){
-    console.log(e.message)
     res.redirect('/')
   }
 })
@@ -59,7 +57,7 @@ router
       const itemId = req.params.itemId;
       const newWeight = req.body.weight
       if(itemId){
-        await Weight.findByIdAndUpdate(itemId,{$set:{weight:newWeight}})
+        await Weight.findByIdAndUpdate(itemId, {$set:{weight:newWeight}})
         const index = res.locals.user.weight_history.findIndex(item=>item._id === itemId)
         res.locals.user.weight_history[index].weight = newWeight
         res.redirect(`/users/${user._id}/tracker`)
@@ -70,7 +68,6 @@ router
       res.sendStatus(401)//unauthorized
     }
   }catch(e){
-    console.log(e.message)
     res.redirect('/')
   }
 })
@@ -90,7 +87,6 @@ router
       res.sendStatus(401)//unauthorized
     }
   }catch(e){
-    console.log(e.message)
     res.redirect('/')
   }
 });
@@ -106,10 +102,10 @@ router
     if(user){
       const exercise = req.body.exercise;
       const repetitions = Number(req.body.repetitions);
+      const sets = Number(req.body.sets);
       const status = req.body.status||'not finished';
-      console.log({exercise,repetitions,status})
-      if(exercise && repetitions){
-        const newPlan = await Plan.create({exercise,repetitions,status})
+      if(exercise && repetitions && sets){
+        const newPlan = await Plan.create({exercise, repetitions, status, sets})
         res.locals.user.plan_history.push(newPlan)
         res.redirect(`/users/${user._id}/tracker`)
       }else{
@@ -119,7 +115,6 @@ router
       res.sendStatus(401)//unauthorized
     }
   }catch(e){
-    console.log(e.message)
     res.redirect('/')
   }
 })
@@ -142,11 +137,12 @@ router
       const itemId = req.params.itemId;
       const exercise = req.body.exercise
       const repetitions = req.body.repetitions
+      const sets = req.body.sets
       const status = req.body.status||'not finished'
-      if(itemId&&status&&repetitions&&exercise){
-        await Plan.findByIdAndUpdate(itemId,{$set:{exercise:exercise,repetitions:repetitions,status:status}})
+      if(itemId && status && repetitions && exercise){
+        await Plan.findByIdAndUpdate(itemId,{$set:{exercise:exercise, repetitions:repetitions, status:status, sets:sets}})
         const index = res.locals.user.plan_history.findIndex(item=>item._id === itemId)
-        res.locals.user.plan_history[index] = {_id:itemId,exercise,repetitions,status}
+        res.locals.user.plan_history[index] = {_id:itemId, exercise, repetitions, status, sets}
         res.redirect(`/users/${user._id}/tracker`)
       }else{
         res.sendStatus(422)//wrong format
@@ -155,7 +151,6 @@ router
       res.sendStatus(401)//unauthorized
     }
   }catch(e){
-    console.log(e.message)
     res.redirect('/')
   }
 })
@@ -175,7 +170,6 @@ router
       res.sendStatus(401)//unauthorized
     }
   }catch(e){
-    console.log(e.message)
     res.redirect('/')
   }
 });

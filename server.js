@@ -31,7 +31,6 @@ app.use(session({
 
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on("connected", () => {
-  console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
 app.get('/', async (req, res) => {
@@ -55,5 +54,4 @@ app.use('/users/:userId/tracker', trackerController);
 
 
 app.listen(port, () => {
-  console.log(`The express app is ready on port ${port}!`);
 });

@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Exercises</title>
+    <title>My Exercise</title>
   </head>
   <body>
     <%- include('../partials/_navbar.ejs') %>
-    <h1>Exercise</h1>
+    <h1 class="center">Exercise</h1>
     <form action="<%=`/users/${user._id}/tracker/plan`%>" method="POST">
       <div>
         <label for="exercise">Exercise:</label>
@@ -17,11 +17,15 @@
         <label for="repetitions">Repetitions:</label>
         <input type="number" name="repetitions" id="repetitions" />
       </div>
+        <div>
+        <label for="sets">Sets:</label>
+        <input type="number" name="sets" id="sets" />
+      </div>
       <div>
         <label for="status">Status:</label>
         <select name="status" id="status">
-          <option value="finished">finished</option>
-          <option value="not finished">not finished</option>
+          <option value="finished">Finished</option>
+          <option value="not finished">Not Finished</option>
         </select>
       </div>
       <button type="submit">Create Exercise Record</button>
