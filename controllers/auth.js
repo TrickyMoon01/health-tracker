@@ -12,7 +12,7 @@ router.post('/sign-up', async (req, res) => {
     const userInDataBase = await User.findOne({ username: req.body.username });
 
     if (userInDataBase) {
-        return res.send('username already taken');
+        return res.send('Username is already taken. <a href="/sign-up">Please try again.</a>');
     }
 
     if (req.body.password !== req.body.confirmPassword) {

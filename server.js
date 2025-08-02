@@ -39,14 +39,6 @@ app.get('/', async (req, res) => {
   });
 });
 
-app.get('/view-pantry', (req, res) => {
-  if (req.session.user) {
-    res.send(`Welcome to your pantry ${req.session.user.username}`);
-  } else {
-    res.send('Sorry, you must be signed in');
-  }
-});
-
 app.use(passUserToView);
 app.use('/auth', authController);
 app.use(isSignedIn);
