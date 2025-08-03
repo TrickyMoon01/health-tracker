@@ -13,13 +13,18 @@
         <% if(user.weight_history.length){ %>
           <div class="flex-start flex-end chart" >
             <%user.weight_history.forEach(function(el){ %>
-              <div class="weight-column" style="height:<%= el.weight%>px"><%= el.weight%></div>
+              <div class="weight-column" <%= `style=height:${el.weight}px` %> >
+                <%= el.weight%>
+              </div>
             <%});%>
           </div>
+          <details style="margin: 20px 0">
+          <summary>Details</summary>
+
           <ul>
             <%user.weight_history.forEach(function(el){ %>
               <li style="display: flex; gap: 10px; align-items: center">
-                <p><%=el.weight %></p>
+                <p><%=el.weight %> lbs</p>
                 <a href="<%=`/users/${user._id}/tracker/${el._id}/edit_weight`%>">
                   <button type="submit">edit</button>
                 </a>
@@ -34,6 +39,7 @@
               </li>
             <%});%>
           </ul>
+          </details>
         <%}else{%>
         <p>There are no weight records.</p>
         <%}%>
@@ -46,7 +52,7 @@
         <ul>
           <%user.plan_history.forEach(function(el){ %>
             <li style="display: flex; gap: 10px; align-items: center">
-              <p><%=el.exercise %> Reps: <%=el.repetitions %>, Sets: <%=el.sets %> Status: <input disabled type='checkbox' <%= el.status==='finished'?'checked':'' %>/></p>
+              <p><%=el.exercise %> <%- '<br>' %>Weight: <%=el.weight1 %> lbs <%- '<br>' %>Sets: <%=el.sets %> <%- '<br>' %>Reps: <%=el.repetitions %>, <%- '<br>' %>Status: <input disabled type='checkbox' <%= el.status==='finished'?'checked':'' %>/></p>
               <a href="<%=`/users/${user._id}/tracker/${el._id}/edit_plan`%>">
                 <button type="submit">edit</button>
               </a>

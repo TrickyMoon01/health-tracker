@@ -18,6 +18,10 @@ const planSchema = new mongoose.Schema(
       type: Number,
       default: 1,
     },
+    weight1: {
+      type: Number,
+      default: 1,
+    },
     status: {
       type: String,
       enum: ["finished", "not finished"],

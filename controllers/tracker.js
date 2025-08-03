@@ -25,7 +25,7 @@ router
     if(user){
       const weight = Number(req.body.weight);
       if(weight){
-        const newWeight = await Weight.create({weight:weight, user_id:user._id})
+        const newWeight = await Weight.create({weight:weight, user_id:user._id,})
         res.locals.user.weight_history.push({_id:newWeight._id, weight:weight})
         res.redirect(`/users/${user._id}/tracker`)
       }else{
@@ -103,9 +103,10 @@ router
       const exercise = req.body.exercise;
       const repetitions = Number(req.body.repetitions);
       const sets = Number(req.body.sets);
+      const weight1 = Number(req.body.weight1);
       const status = req.body.status||'not finished';
-      if(exercise && repetitions && sets){
-        const newPlan = await Plan.create({exercise, repetitions, status, sets})
+      if(exercise && repetitions && sets && weight1){
+        const newPlan = await Plan.create({exercise, repetitions, status, sets, weight1, user_id:user._id})
         res.locals.user.plan_history.push(newPlan)
         res.redirect(`/users/${user._id}/tracker`)
       }else{
@@ -137,12 +138,13 @@ router
       const itemId = req.params.itemId;
       const exercise = req.body.exercise
       const repetitions = req.body.repetitions
+      const weight1 = req.body.weight1
       const sets = req.body.sets
       const status = req.body.status||'not finished'
-      if(itemId && status && repetitions && exercise){
-        await Plan.findByIdAndUpdate(itemId,{$set:{exercise:exercise, repetitions:repetitions, status:status, sets:sets}})
+      if(itemId && status && repetitions && exercise && weight1){
+        await Plan.findByIdAndUpdate(itemId,{$set:{exercise:exercise, repetitions:repetitions, status:status, sets:sets, weight1:weight1}})
         const index = res.locals.user.plan_history.findIndex(item=>item._id === itemId)
-        res.locals.user.plan_history[index] = {_id:itemId, exercise, repetitions, status, sets}
+        res.locals.user.plan_history[index] = {_id:itemId, exercise, repetitions, status, sets, weight1}
         res.redirect(`/users/${user._id}/tracker`)
       }else{
         res.sendStatus(422)//wrong format

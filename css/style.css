@@ -31,7 +31,7 @@ body>form{
     width: 400px;
     margin:auto;
     background-color: white;
-    div{
+    &>div{
         display: flex;
         flex-direction: column;
         gap:5px;
@@ -41,6 +41,7 @@ body>form{
         }
         input{
             height: 25px;
+            width: 100%;
         }
     }
     button{
@@ -52,7 +53,14 @@ body>form{
 .center{
     text-align: center;
 }
-
+.flex{
+    display: flex;
+    align-items: center;
+    gap:9px;
+}
+.flex-1{
+    flex:1;
+}
 .flex-around{
     display: flex;
     justify-content: space-around;
@@ -70,7 +78,20 @@ body>form{
     background-color: wheat;
     border: 1px solid brown;
 }
-
+.relative{
+    position: relative;
+    /* width:100%; */
+    /* box-sizing:content-box; */
+    input{
+        width:100%;
+        box-sizing:padding-box;
+    }
+}
 .chart{
     width: 200px
+}
+.measure{
+    position: absolute;
+    right:20px;
+    top:8px
 }

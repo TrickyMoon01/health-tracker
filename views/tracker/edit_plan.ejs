@@ -14,12 +14,20 @@
         <input type="text" name="exercise" id="exercise" value="<%= item.exercise%>" />
       </div>
       <div>
-        <label for="repetitions">Repetitions:</label>
-        <input type="number" name="repetitions" id="repetitions" value="<%= item.repetitions%>"/>
+        <label for="weight1">Weight:</label>
+         <div class="relative">
+          <input  type="number" name="weight1" id="weight1" value="<%= item.weight1%>"/>
+          <div class="measure">lbs</div>
+        </div>
       </div>
+     
       <div>
         <label for="sets">Sets:</label>
         <input type="number" name="sets" id="sets" value="<%= item.sets%>"/>
+      </div>
+      <div>
+        <label for="repetitions">Repetitions:</label>
+        <input type="number" name="repetitions" id="repetitions" value="<%= item.repetitions%>"/>
       </div>
       <div>
         <label for="status">Status:</label>
