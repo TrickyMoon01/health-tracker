@@ -10,8 +10,11 @@
     <h1 class="center">Edit Weight Record</h1>
     <form action="<%=`/users/${user._id}/tracker/${item._id}/edit_weight`%>?_method=PUT" method="POST">
       <div>
-      <label for="name">Weight:</label>
-      <input type="text" name="weight" id="weight" value="<%= item.weight%>" />
+        <label for="name">Weight:</label>
+        <div class="relative">
+          <input type="text" name="weight" id="weight" value="<%= item.weight%>" />
+          <div class="measure">lbs</div>
+        </div>
       </div>
       <button type="submit">Update Weight Record</button>
     </form>

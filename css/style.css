@@ -24,6 +24,10 @@ body nav {
         color:white
     }
 }
+input:focus,
+button:focus {
+    outline: 2px solid #000;
+}
 
 body>form{
     border: 1px solid black;
@@ -61,9 +65,10 @@ body>form{
 .flex-1{
     flex:1;
 }
-.flex-around{
+.flex-center{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 200px;
 }
 .flex-start{
     display: flex;
@@ -80,8 +85,6 @@ body>form{
 }
 .relative{
     position: relative;
-    /* width:100%; */
-    /* box-sizing:content-box; */
     input{
         width:100%;
         box-sizing:padding-box;
@@ -92,6 +95,7 @@ body>form{
 }
 .measure{
     position: absolute;
-    right:20px;
-    top:8px
+    right:12px;
+    top:7px
 }
+

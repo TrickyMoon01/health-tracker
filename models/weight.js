@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 
 const weightSchema = new mongoose.Schema(
   {
-    user_id:{
+    user_id: {
       type: mongoose.Schema.Types.ObjectId,
-        ref:'User',
+      ref: "User",
     },
     weight: {
       type: Number,

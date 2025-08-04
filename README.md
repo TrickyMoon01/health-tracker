@@ -6,6 +6,7 @@ I built this app because I love going to the gym. I believe that health is wealt
 ## 1. Technologies Used
 
 * **Javascript**
+* **Node js**
 * **CSS**
 
 ## 2. Libraries Used

@@ -10,8 +10,12 @@
     <h1 class="center">Weight</h1>
     <form action="<%=`/users/${user._id}/tracker/weight`%>" method="POST">
       <div>
-      <label for="weight">Weight:</label>
-      <input type="number" name="weight" id="weight" /></div>
+        <label for="weight">Weight:</label>
+        <div class="relative">
+          <input type="number" name="weight" id="weight" />
+          <div class="measure">lbs</div>
+        </div>
+      </div>
       <button type="submit">Create Weight Record</button>
     </form>
   </body>
