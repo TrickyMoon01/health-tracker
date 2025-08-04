@@ -6,7 +6,7 @@ I built this app because I love going to the gym. I believe that health is wealt
 ## 1. Technologies Used
 
 * **Javascript**
-* **Node js**
+* **Node.js**
 * **CSS**
 
 ## 2. Libraries Used
@@ -28,6 +28,6 @@ Future plans will be to add better visuals for the weight chart such as a line g
 
 ## 5. Getting Started
 [Planning Materials](https://trello.com/b/tVIZEQ1R/health-tracker)<br>
-[Health Tracker](https://health-tracker-ef1892125bfd.herokuapp.com/)
+[Deployed App](https://health-tracker-ef1892125bfd.herokuapp.com/)
 
 
