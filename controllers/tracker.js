@@ -58,8 +58,8 @@ router
       const user = req.session.user;
       if (user) {
         const itemId = req.params.itemId;
-        const newWeight = req.body.weight;
-        if (itemId) {
+        const newWeight = Number(req.body.weight);
+        if (itemId && newWeight) {
           await Weight.findByIdAndUpdate(itemId, {
             $set: { weight: newWeight },
           });
@@ -112,11 +112,11 @@ router
       const user = req.session.user;
       if (user) {
         const exercise = req.body.exercise;
-        const repetitions = Number(req.body.repetitions);
-        const sets = Number(req.body.sets);
-        const weight1 = Number(req.body.weight1);
+        const repetitions = Number(req.body.repetitions)||1;
+        const sets = Number(req.body.sets)||1;
+        const weight1 = Number(req.body.weight1)||0;
         const status = req.body.status || "not finished";
-        if (exercise && repetitions && sets && weight1) {
+        if (exercise && repetitions && sets) {
           const newPlan = await Plan.create({
             exercise,
             repetitions,
@@ -155,11 +155,11 @@ router
       if (user) {
         const itemId = req.params.itemId;
         const exercise = req.body.exercise;
-        const repetitions = req.body.repetitions;
-        const weight1 = req.body.weight1;
-        const sets = req.body.sets;
+        const repetitions = Number(req.body.repetitions)||1;
+        const weight1 = Number(req.body.weight1)||0;
+        const sets = Number(req.body.sets)||1;
         const status = req.body.status || "not finished";
-        if (itemId && status && repetitions && exercise && weight1) {
+        if (itemId && status && repetitions && exercise) {
           await Plan.findByIdAndUpdate(itemId, {
             $set: {
               exercise: exercise,

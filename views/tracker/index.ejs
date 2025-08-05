@@ -52,7 +52,15 @@
         <ul>
           <%user.plan_history.forEach(function(el){ %>
             <li style="display: flex; gap: 10px; align-items: center">
-              <p><%=el.exercise %> <%- '<br>' %>Weight: <%=el.weight1 %> lbs <%- '<br>' %>Sets: <%=el.sets %> <%- '<br>' %>Reps: <%=el.repetitions %>, <%- '<br>' %>Status: <input disabled type='checkbox' <%= el.status==='finished'?'checked':'' %>/></p>
+              <p>
+                <%=el.exercise %> <%- '<br>' %>
+                <% if(el.weight1){ %>
+                  Weight: <%=el.weight1 %> lbs <%- '<br>' %>
+                <% } %>
+                Sets: <%=el.sets %> <%- '<br>' %>
+                Reps: <%=el.repetitions %>, <%- '<br>' %>
+                Status: <input disabled type='checkbox' <%= el.status==='finished'?'checked':'' %>/>
+              </p>
               <a href="<%=`/users/${user._id}/tracker/${el._id}/edit_plan`%>">
                 <button type="submit">edit</button>
               </a>

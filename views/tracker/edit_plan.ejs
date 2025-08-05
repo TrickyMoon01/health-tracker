@@ -11,7 +11,7 @@
     <form action="<%=`/users/${user._id}/tracker/${item._id}/edit_plan`%>?_method=PUT" method="POST">
       <div>
         <label for="exercise">Exercise:</label>
-        <input type="text" name="exercise" id="exercise" value="<%= item.exercise%>" />
+        <input required type="text" name="exercise" id="exercise" value="<%= item.exercise%>" />
       </div>
       <div>
         <label for="weight1">Weight:</label>

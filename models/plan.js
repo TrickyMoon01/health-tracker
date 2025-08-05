@@ -20,7 +20,7 @@ const planSchema = new mongoose.Schema(
     },
     weight1: {
       type: Number,
-      default: 1,
+      default: 0,
     },
     status: {
       type: String,
